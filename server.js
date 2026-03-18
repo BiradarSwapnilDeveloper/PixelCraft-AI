@@ -55,8 +55,8 @@ passport.use(new GoogleStrategy({
         user = await User.create({
           googleId: profile.id,
           name: profile.displayName,
-          email: profile.emails[0].value,
-          avatar: profile.photos[0].value
+          email: profile.emails && profile.emails.length > 0 ? profile.emails[0].value : 'no-email@provided.com',
+          avatar: profile.photos && profile.photos.length > 0 ? profile.photos[0].value : ''
         });
         console.log("New user registered:", user.email);
       } else {
@@ -66,6 +66,7 @@ passport.use(new GoogleStrategy({
       }
       return done(null, user);
     } catch (err) {
+      console.error("🔴 Google Auth Error (Check MongoDB connection!):", err.message);
       return done(err, null);
     }
   }
