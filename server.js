@@ -42,8 +42,8 @@ passport.deserializeUser(async (id, done) => {
 
 // Configure Google OAuth Strategy
 passport.use(new GoogleStrategy({
-    clientID: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    clientID: process.env.GOOGLE_CLIENT_ID || 'dummy-client-id-to-prevent-crash',
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET || 'dummy-client-secret',
     callbackURL: "/auth/google/callback",
     proxy: true // Necessary for HTTPS on Render
   },
